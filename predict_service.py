@@ -8,13 +8,13 @@ home = os.getenv("HOME")
 
 def update_tle():
     # Open list of satellites to copy TLEs
-    satlist_filename = '/home/jspark/tle/id_list'
+    satlist_filename = os.getcwd() + '/id_list'
     satlist_file = open(satlist_filename)
     satlist = (satlist_file.readlines())
     satlist_file.close()
 
     # Open the TLE file to be read by predict
-    tle_dest_filename = home + '/tle/predict.tle'
+    tle_dest_filename = os.getcwd() + '/predict.tle'
     tle_dest_file = open(tle_dest_filename,'w')
 
     for satid in satlist:
@@ -36,7 +36,7 @@ def main():
 
         update_tle()
         with open('/dev/null', "w") as fnull:
-            predict_service = subprocess.Popen(['predict', '-s', '-t', '/home/jspark/tle/predict.tle'], stdout = fnull, stderr = fnull)
+            predict_service = subprocess.Popen(['predict', '-s', '-t', os.getcwd() + '/predict.tle'], stdout = fnull, stderr = fnull)
 
         time.sleep(3600)
 
